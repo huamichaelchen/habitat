@@ -884,7 +884,9 @@ fn ctl_secret_key(cfg: &ManagerConfig) -> Result<String> {
     let sup_root = cfg.sup_root();
     let mut secret_key = String::new();
     if !ctl_gateway::read_secret_key(&sup_root, &mut secret_key)? {
-        return Err(sup_error!(Error::CtlSecretNotFound(sup_root)));
+        return Err(sup_error!(Error::CtlSecretNotFound(
+            ctl_gateway::secret_key_path(sup_root),
+        )));
     }
     Ok(secret_key)
 }
